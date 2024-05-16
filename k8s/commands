@@ -1,0 +1,56 @@
+eksctl create cluster --name three-tier-cluster --region eu-north-1 --node-type t3.micro --nodes-min 1 --nodes-max 2
+
+eksctl create cluster --name three-tier-cluster --region eu-north-1 --node-type t3.medium --nodes-min 1 --nodes-max 2
+aws eks update-kubeconfig --region eu-north-1 --name three-tier-cluster
+kubectl get nodes
+
+
+eksctl delete cluster --name three-tier-cluster --region eu-north-1
+
+kubectl create ns three-tier
+
+kubectl get nodes
+kubectl get ns
+kubectl get all -A
+kubectl get ns -A
+kubectl get pods -A
+kubectl get deployments -A
+kubectl get svc -A
+
+kubectl get all -n three-tier
+kubectl get ns -n three-tier
+kubectl get pods -n three-tier
+kubectl get deployments -n three-tier
+kubectl get svc -n three-tier
+
+
+kubectl apply -f deployment.yaml
+kubectl apply -f .
+kubectl create ns three-tier
+
+
+# echo "admin" | base64
+# echo 'YWRtaW4=' | base64 --decode
+
+MiniKube =  minikube service two-tier-app-service --url
+
+            kubectl port-forward svc/frontend 3000:3000 --address 0.0.0.0 -n three-tier
+            kubectl port-forward svc/api 3500:3500 --address 0.0.0.0 -n three-tier
+
+
+kubectl logs <pod id> -n three-tier
+kubectl get pods -w -A
+kubectl get pods -o=wide -A
+kubectl exec -n three-tier -it mongodb-59797b688c-l52lg -- /bin/bash
+kubectl describe pods api-76df69b7b5-lhhgs -n three-tier
+
+kubectl scale deployment 2tier-dep --replicas=7
+kubectl get persistentvolume -A
+kubectl get replicasets -A
+
+kubectl scale deployment 2tier-dep --replicas=7
+
+kubectl get persistentvolume -A
+
+#kubectl get all -A -w -o=wide
+kubectl get pods -A -w -o=wide

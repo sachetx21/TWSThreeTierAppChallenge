@@ -1,0 +1,45 @@
+
+###################################################
+docker run -d --rm \
+	--network=three-tier-network \
+	--name mongo \
+	-e MONGO_INITDB_ROOT_USERNAME=admin \
+	-e MONGO_INITDB_ROOT_PASSWORD=password123 \
+	-v /data/db:/data/db \
+	-p 27017:27017 \
+	mongo:4.4.6
+	
+#######
+docker logs mongo
+
+docker describe mongo
+#######
+TWSThreeTierAppChallenge$ docker exec -it mongo bash
+
+root@ead979366510:/# mongo admin -u admin -p password123
+
+> show dbs;
+> use todo;
+> db.createUser({
+  user: "admin",
+  pwd: "password123",
+  roles: [
+    { role: "userAdmin", db: "todo" },
+    { role: "dbAdmin",   db: "todo" },
+    { role: "readWrite", db: "todo" }
+  ]
+});
+
+######################
+show dbs;
+db.getUsers();
+show users;
+
+> use todo;
+switched to db todo
+##########
+> db.dropDatabase()
+{ "dropped" : "todo", "ok" : 1 }
+#########
+mongodump -u admin --password 'password123' --authenticationDatabase admin -d todo -o /tmp/dump.bson
+###################################################

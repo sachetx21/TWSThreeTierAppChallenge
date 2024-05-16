@@ -1,0 +1,105 @@
+GIT / GITHUB FORK THE REPO
+
+fork the repo
+git clone https://github.com/sachetx21/TWSThreeTierAppChallenge.git
+cd TWSThreeTierAppChallenge/
+git remote -v
+cd /TWSThreeTierAppChallenge/Application-Code/backend
+nano index.js
+git status
+git add .
+git commit -m "add descriprtion for commit"
+git config --global user.name "author_ID"
+git config --global user.email "author_email@gmail.com"
+git push -u origin main
+
+#keep github access token ready
+
+
+
+
+#below are logs for refrence
+ubuntu@ip-172-31-46-171:~$ git clone https://github.com/sachetx21/TWSThreeTierAppChallenge.git
+Cloning into 'TWSThreeTierAppChallenge'...
+remote: Enumerating objects: 122, done.
+remote: Counting objects: 100% (62/62), done.
+remote: Compressing objects: 100% (40/40), done.
+remote: Total 122 (delta 27), reused 25 (delta 20), pack-reused 60
+Receiving objects: 100% (122/122), 1.32 MiB | 9.71 MiB/s, done.
+Resolving deltas: 100% (32/32), done.
+ubuntu@ip-172-31-46-171:~$
+ubuntu@ip-172-31-46-171:~$
+ubuntu@ip-172-31-46-171:~$
+ubuntu@ip-172-31-46-171:~$ cd TWSThreeTierAppChallenge/
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ ls
+Application-Code  Jenkins-Pipeline-Code  Jenkins-Server-TF  Kubernetes-Manifests-file  README
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git remote -v
+origin  https://github.com/sachetx21/TWSThreeTierAppChallenge.git (fetch)
+origin  https://github.com/sachetx21/TWSThreeTierAppChallenge.git (push)
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ ls
+Application-Code  Jenkins-Pipeline-Code  Jenkins-Server-TF  Kubernetes-Manifests-file  README
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ cd Application-Code/backend/
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge/Application-Code/backend$ nano index.js
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge/Application-Code/backend$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge/Application-Code/backend$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge/Application-Code/backend$ cd ../..
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Application-Code/backend/index.js
+
+no changes added to commit (use "git add" and/or "git commit -a")
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git add .
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   Application-Code/backend/index.js
+
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git commit -m "first test commit"
+[main 8cb8684] first test commit
+ Committer: Ubuntu <ubuntu@ip-172-31-46-171.eu-north-1.compute.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+)
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git config --global user.name "sachetx21"
+git config --global user.email "sachet.chanchawat@gmail.com"
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$ git push -u origin main
+Username for 'https://github.com': sachetx21
+Password for 'https://sachetx21@github.com': create PAT (personal access token)
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 448 bytes | 448.00 KiB/s, done.
+Total 5 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/sachetx21/TWSThreeTierAppChallenge.git
+   7237de1..8cb8684  main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$
+ubuntu@ip-172-31-46-171:~/TWSThreeTierAppChallenge$

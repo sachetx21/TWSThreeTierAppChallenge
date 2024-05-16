@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  
+  mongo:
+    image: "mongo"
+    #image: "mongo:4.4.6"
+    ports:
+      - "27017:27017"
+    container_name: "mongo"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "password123"
+
+  backend:
+    build:
+      context: ./Application-Code/backend/
+#    image: 
+#      "three-tier-baackend"
+    ports:
+      - "3500:3500"
+    environment:
+      MONGO_CONN_STR: "mongodb://admin:password123@mongo:27017"    
+    depends_on:
+      - "mongo"
+
+  frontend:
+    build:
+      context: ./Application-Code/frontend/
+#    image:
+#      "three-tier-frontend"
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./Application-Code/frontend/.env
+    #environment:
+      #REACT_APP_BACKEND_URL: "http://backend:3500/api/tasks"
+
+
+#'mongodb://mongo:27017/todo',
+#
+# OPEN BROWSER >> http://<change this IP>:3500/api/tasks

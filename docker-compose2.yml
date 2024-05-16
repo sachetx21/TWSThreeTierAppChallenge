@@ -1,0 +1,78 @@
+
+version: '3.1'
+services:
+
+  mongo:
+    image: mongo
+    container_name: "mongo"
+    restart: always
+    #env_file:
+      #- ./backend/.env.sample
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - /home/mongo-data:/data/db
+    #networks:
+      #- my-network
+ 
+  mongo-express:
+    image: mongo-express
+    container_name: "mongo-express"    
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
+    #networks:
+     # - my-network
+
+  backend:
+    build:
+      context: ./Application-Code/backend/
+#    image: 
+#      "three-tier-baackend"
+    ports:
+      - "3500:3500"
+    environment:
+      MONGO_CONN_STR: "mongodb://root:example@mongo:27017"
+      #MONGO_USERNAME: "root"
+      #MONGO_PASSWORD: "example"
+      #USE_DB_AUTH: "false"
+    #networks:
+      #- my-network
+    depends_on:
+      - "mongo"
+  
+
+  frontend:
+    build:
+      context: ./Application-Code/frontend/
+#    image:
+#      "three-tier-frontend"
+    #networks:
+      #- my-network
+    ports:
+      - "3000:3000"
+    #env_file:
+      #- ./Application-Code/frontend/.env
+    environment:
+      REACT_APP_BACKEND_URL: "http://backend:3500/api/tasks"
+#'mongodb://mongo:27017/todo',
+#
+# OPEN BROWSER >> http://<change this IP>:3500/api/tasks
+
+
+volumes:
+  db:
+networks:
+  my-network:
+
+
+

@@ -1,0 +1,32 @@
+link: https://github.com/aws/eks-charts/blob/master/stable/aws-load-balancer-controller/templates/
+link: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/helm/aws-load-balancer-controller/Chart.yaml
+
+Step 9: Install AWS Load Balancer
+
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicyDIL --policy-document file://iam_policy.json
+eksctl utils associate-iam-oidc-provider --region=eu-north-1 --cluster=three-tier-cluster --approve
+eksctl create iamserviceaccount --cluster=three-tier-cluster --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRoleDIL --attach-policy-arn=arn:aws:iam::783896175810:policy/AWSLoadBalancerControllerIAMPolicyDIL --approve --region=eu-north-1
+############## important above 
+#untill now only Load Balancer Service account is created 
+#ALB is not creted yet
+
+Step 10: Deploy AWS Load Balancer Controller
+
+sudo snap install helm --classic
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update eks
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=three-tier-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+kubectl get deployment -n kube-system aws-load-balancer-controller
+###############
+helm list
+
+helm repo list
+
+###############
+kubectl apply -f ingress.yaml
+
+kubectl get ing -n three-tier
+#############
+once we get ingress adress 
+update your CNAME in DNS 

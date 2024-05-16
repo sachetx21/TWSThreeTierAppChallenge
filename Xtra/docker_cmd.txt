@@ -1,0 +1,110 @@
+docker network create three-tier-network
+
+docker network ls
+
+docker network inspect three-tier-network
+########
+################
+docker network create three-tier-network
+docker network ls
+docker network inspect three-tier-network
+
+###################################################
+docker run -d \
+	--network=three-tier-network \
+	--name mongo \
+	-e MONGO_INITDB_ROOT_USERNAME=admin \
+	-e MONGO_INITDB_ROOT_PASSWORD=password123 \
+	-v /data/db:/data/db \
+	-p 27017:27017 \
+	mongo:4.4.6
+	
+#######
+docker logs mongo
+
+docker describe mongo
+#######
+golu@go:~/TWSThreeTierAppChallenge/Application-Code/backend$ docker exec -it mongo bash
+root@ead979366510:/# mongo admin -u admin -p password123
+> show dbs;
+> use todo;
+> 
+~~~~~~~~~
+db.createUser({
+  user: "admin",
+  pwd: "password123",
+  roles: [
+    { role: "userAdmin", db: "todo" },
+    { role: "dbAdmin",   db: "todo" },
+    { role: "readWrite", db: "todo" }
+  ]
+});
+
+###########
+db.createUser({
+  user: "admin",
+  pwd: "password123",
+  roles: [
+    { role: "root", db: "todo" }
+  ]
+});
+###########
+show dbs;
+db.getUsers();
+ show users;
+
+> use todo;
+switched to db todo
+> db.dropDatabase()
+{ "dropped" : "todo", "ok" : 1 }
+#########
+mongodump -u admin --password 'password123' --authenticationDatabase admin -d todo -o /tmp/dump.bson
+###################################################
+cd /home/ubuntu/TWSThreeTierAppChallenge/Application-Code/backend/
+#######
+Dockerfile >> EXPOSE 3500
+#######
+db.js >> connectionParams.auth = {
+                username: 'admin',
+                password: 'password123'
+            };
+}
+        await mongoose.connect(
+           'mongodb://mongo:27017/todo',
+#######
+#######
+docker kill backend
+docker rm backend
+docker rmi three-tier-backend
+cd /home/ubuntu/TWSThreeTierAppChallenge/Application-Code/backend/
+docker build . -t three-tier-backend
+docker run --network=three-tier-network --rm -d --name backend -p 3500:3500 three-tier-backend
+
+
+docker logs backend
+docker logs mongo
+		{"t":{"$date":"2024-03-26T22:47:57.261+00:00"},"s":"I",  "c":"ACCESS",   "id":20249,   "ctx":"conn3","msg":
+		"Authentication failed","attr":{"mechanism":"SCRAM-SHA-256","speculative":true,
+		"principalName":"admin","authenticationDatabase":"todo","remote":"172.18.0.3:34352","extraInfo":{},"error":"UserNotFound: Could not find user \"admin\" for db \"todo\""}}
+mongodump -u admin --password 'password123' --authenticationDatabase admin -d todo -o /tmp/dump.bson
+########################################
+OPEN BROWSER >> http://<change this IP>:3500/api/tasks
+########################################
+OPEN PORT 3000, 3500 IN AWS SECURITY GROUP
+########################################
+cd /home/ubuntu/TWSThreeTierAppChallenge/Application-Code/frontend
+Dockerfile >> EXPOSE 3000
+
+#########
+
+edit >> TWSThreeTierAppChallenge/Application-Code/frontend/src/services/taskServices.js
+
+const apiUrl = "http://<change this IP>:3500/api/tasks" ;
+########################################
+docker kill frontend
+docker rm frontend
+docker rmi three-tier-frontend
+cd /home/ubuntu/TWSThreeTierAppChallenge/Application-Code/frontend
+docker build . -t three-tier-frontend
+docker run --network=three-tier-network --rm -d --name frontend -p 3000:3000 three-tier-frontend
+docker logs frontend
